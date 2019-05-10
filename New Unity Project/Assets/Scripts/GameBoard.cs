@@ -6,8 +6,10 @@ public class GameBoard : MonoBehaviour
 
     public int rows;
     public int cols;
-    public Cell playspace;
+    public Cell[] playspace;
     public Cell[,] board;
+
+    public PlayerControl player;
 
     
 
@@ -20,7 +22,18 @@ public class GameBoard : MonoBehaviour
         {
             for (int c = 0; c < cols; c++)
             {
-                Cell clone = Instantiate(playspace, newBoard.transform);
+                if (r == 0 && c == 0)
+                {
+                    if (player != null)
+                    {
+                        PlayerControl newPlayer = Instantiate(player, newBoard.transform);
+                        player.SetStartingPosition(r, c);
+                    }
+                    else
+                        Debug.LogError("Player PreFab reference is missing!!!");
+                }
+                Cell randomGridPiece = PickRandomCell();
+                Cell clone = Instantiate(randomGridPiece, newBoard.transform);
                 clone.SetNewLocation((r*10),(c*10));
                 board[r, c] = clone;
 
@@ -40,4 +53,22 @@ public class GameBoard : MonoBehaviour
     {
 
     }
+
+    Cell PickRandomCell()
+    {
+        Cell rngFloor;
+        int rng = Random.Range(1,12);
+
+        if (rng <= 2)
+        {
+            rngFloor = playspace[1];
+        }
+        else
+        {
+            rngFloor = playspace[0];
+        }
+
+        return rngFloor;
+    }
+
 }
