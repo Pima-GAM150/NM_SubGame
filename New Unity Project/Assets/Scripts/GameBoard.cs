@@ -6,7 +6,7 @@ public class GameBoard : MonoBehaviour
 
     public int rows;
     public int cols;
-    public Cell[] playspace;
+    public Cell[] playSpaces;
     public Cell[,] board;
 
     public PlayerControl player;
@@ -57,15 +57,20 @@ public class GameBoard : MonoBehaviour
     Cell PickRandomCell()
     {
         Cell rngFloor;
-        int rng = Random.Range(1,12);
+        int rng = Random.Range(1,20);
 
-        if (rng <= 2)
+
+        if(rng <= 2)
         {
-            rngFloor = playspace[1];
+            rngFloor = playSpaces[1];
         }
-        else
+        else if(rng <= 6)
         {
-            rngFloor = playspace[0];
+            rngFloor = playSpaces[2];//shadows
+        }
+        else 
+        {
+            rngFloor = playSpaces[0];
         }
 
         return rngFloor;

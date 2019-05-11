@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Land : Cell
+public class Shadows : Cell
 {
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -15,13 +18,14 @@ public class Land : Cell
     {
         
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if(other.CompareTag("Player"))
         {
             PlayerControl target = other.GetComponent<PlayerControl>();
 
-            target.TakeDamage(10);
+            target.TakeDamage(2);
         }
     }
 }

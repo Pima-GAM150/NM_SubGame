@@ -390,7 +390,7 @@ GameObject:
   - component: {fileID: 7139883188972478523}
   m_Layer: 0
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -486,14 +486,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8e6da151c9c69d4b8b6ce8b1d7cabea, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitPoints: 10
   moveSpeed: 5
-  currentPos: {fileID: 0}
-  forwardDestination: {fileID: 0}
+  currentPos: {x: 0, y: 0, z: 0}
+  forwardDestination: {x: 0, y: 0, z: 0}
   rightDestination: {fileID: 0}
   leftDestination: {fileID: 0}
   distance: 0
-  commandQueue: []
+  isMoving: 0
+  commandQueue: 
   gameBoard: {fileID: 0}
+  playerState: 0
 --- !u!1 &6916323844017226891
 GameObject:
   m_ObjectHideFlags: 0

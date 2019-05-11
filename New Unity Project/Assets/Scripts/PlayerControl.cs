@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
 
-
+    public float hitPoints;
     public float moveSpeed;
 
     public Vector3 currentPos;
@@ -15,6 +15,10 @@ public class PlayerControl : MonoBehaviour
     public float distance;
     public bool isMoving = false;
     bool buttonsActive;
+
+    bool forward = false;
+    bool left = false;
+    bool right = false;
 
     float startTime;
 
@@ -40,6 +44,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        HealthCheck();
         if (!isMoving)
         {
             buttonsActive = true;
@@ -48,12 +53,37 @@ public class PlayerControl : MonoBehaviour
         {
             MoveShip();
         }
+
+
+        if (forward)
+            MoveForward();
+        if (left)
+            MoveLeft();
+        if (right)
+            MoveRight();
+
+
+    }
+
+    private void HealthCheck()
+    {
+        if (hitPoints <= 0)
+        {
+            playerState = StatePlayer.dead;
+
+            Destroy(gameObject);
+        }
+        else
+        {
+            playerState = StatePlayer.alive;
+        }
     }
 
     private void MoveShip()
     {
-        foreach (int command in commandQueue)
+        for (int command = 0; command< commandQueue.Count; command++)
         {
+            Debug.Log("CurrentCommand" + command);
             //float waitTimer = 10;
             //while (waitTimer > 0)
             //{
@@ -61,13 +91,21 @@ public class PlayerControl : MonoBehaviour
             //    Debug.Log(waitTimer);
             //}
             //currentPos = this.transform.position;
-            if (command == 1)
-                MoveForward();
-            if (command == 2)
-                MoveLeft();
-            if (command == 3)
-                MoveRight();
-
+            if (commandQueue[command] == 1)
+            {
+                forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+                forward = true;
+            }
+            if (commandQueue[command] == 2)
+            {
+                forwardDestination = new Vector3(transform.position.x - step, transform.position.y, transform.position.z);
+                left = true;
+            }
+            if (commandQueue[command] == 3)
+            {
+                forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
+                right = true;
+            }
             //waitTimer = 10;
         }
 
@@ -111,61 +149,42 @@ public class PlayerControl : MonoBehaviour
     public void MoveForward()
     {
         //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+        
 
-        startTime = Time.time;
-
-        distance = Vector3.Distance(currentPos, forwardDestination);
-
-
-        //Debug.Log("Moving forward");
-
-        //    float distanceCovered = (Time.time - startTime) * moveSpeed;
-        //    float fracJourney = distanceCovered / distance;
-        if (Vector3.Distance(currentPos, forwardDestination) > .5)
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
         {
-            forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+            forward = false;
 
-            transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
+           
         }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
     public void MoveLeft()
     {
-        this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
-        
-        //currentPos = this.transform.position;
-        //startTime = Time.time;
-        //distance = Vector3.Distance(currentPos, forwardDestination);
-        //float distanceCovered = (Time.time - startTime) * moveSpeed;
-        //float fracJourney = distanceCovered / distance;
+        //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
 
-        //Debug.Log("Moving left");
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
+        {
+            left = false;
 
 
-        //forwardDestination = new Vector3(transform.position.x - step, transform.position.y, transform.position.z);
-
-        //transform.position = Vector3.Lerp(currentPos, forwardDestination, fracJourney);
+        }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
 
     public void MoveRight()
     {
-        this.transform.position = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
-
-        //currentPos = this.transform.position;
-        //startTime = Time.time;
-        //distance = Vector3.Distance(currentPos, forwardDestination);
-        //float distanceCovered = (Time.time - startTime) * moveSpeed;
-        //float fracJourney = distanceCovered / distance;
-
-        //Debug.Log("Moving right");
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
+        {
+            right = false;
 
 
-        //forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
-
-        //transform.position = Vector3.Lerp(currentPos, forwardDestination, fracJourney);
+        }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
 
 
-
+  
 
     public void Pause()
     {
@@ -176,6 +195,12 @@ public class PlayerControl : MonoBehaviour
         {
             return;
         }
+    }
+
+    public void TakeDamage(int damageIn)
+    {
+        hitPoints -= damageIn;
+
     }
 
     private void OnTriggerEnter(Collider other)
