@@ -71,4 +71,20 @@ public class GameBoard : MonoBehaviour
         return rngFloor;
     }
 
+    public Vector3 FindPlayerLocation(PlayerControl playerObject)
+    {
+
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                if (board[r, c].transform.position == playerObject.transform.position)
+                    return board[r, c].transform.position;
+
+            }
+
+        }
+        return playerObject.transform.position;
+    }
+
 }

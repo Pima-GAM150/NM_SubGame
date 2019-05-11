@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class UIManager : MonoBehaviour
 {
+
+    public Text commandQDisplay;
 
     PlayerControl playerObject;
 
@@ -25,7 +28,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Move Up pressed");
 
-
+        commandQDisplay.text += "\n Forward";
 
         playerObject.QueueForwardCommand();
 
@@ -36,6 +39,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Move Left pressed");
 
 
+        commandQDisplay.text += "\n Left";
 
         playerObject.QueueLeftCommand();
 
@@ -46,6 +50,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Move Right pressed");
 
 
+        commandQDisplay.text += "\n Right";
 
         playerObject.QueueRightCommand();
 
@@ -53,7 +58,7 @@ public class UIManager : MonoBehaviour
 
     public void SetSail()
     {
-        Debug.Log("Move Right pressed");
+        Debug.Log("Set Sail pressed");
 
 
 

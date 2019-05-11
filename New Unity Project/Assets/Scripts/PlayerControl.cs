@@ -52,10 +52,15 @@ public class PlayerControl : MonoBehaviour
 
     private void MoveShip()
     {
-        foreach(int command in commandQueue)
+        foreach (int command in commandQueue)
         {
-
-            currentPos = this.transform.position;
+            //float waitTimer = 10;
+            //while (waitTimer > 0)
+            //{
+            //    waitTimer -= Time.deltaTime;
+            //    Debug.Log(waitTimer);
+            //}
+            //currentPos = this.transform.position;
             if (command == 1)
                 MoveForward();
             if (command == 2)
@@ -63,6 +68,7 @@ public class PlayerControl : MonoBehaviour
             if (command == 3)
                 MoveRight();
 
+            //waitTimer = 10;
         }
 
         isMoving = false;
@@ -104,21 +110,24 @@ public class PlayerControl : MonoBehaviour
     //these are the command methods
     public void MoveForward()
     {
-        this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+        //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
 
-        //startTime = Time.time;
-        //distance = Vector3.Distance(currentPos, forwardDestination);
-        //float distanceCovered = (Time.time - startTime) * moveSpeed;
-        //float fracJourney = distanceCovered / distance;
+        startTime = Time.time;
+
+        distance = Vector3.Distance(currentPos, forwardDestination);
+
 
         //Debug.Log("Moving forward");
-        
 
-        //forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+        //    float distanceCovered = (Time.time - startTime) * moveSpeed;
+        //    float fracJourney = distanceCovered / distance;
+        if (Vector3.Distance(currentPos, forwardDestination) > .5)
+        {
+            forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
 
-        //transform.position = Vector3.Lerp(currentPos, forwardDestination, fracJourney);
+            transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
+        }
     }
-
     public void MoveLeft()
     {
         this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
@@ -153,6 +162,28 @@ public class PlayerControl : MonoBehaviour
         //forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
 
         //transform.position = Vector3.Lerp(currentPos, forwardDestination, fracJourney);
+    }
+
+
+
+
+    public void Pause()
+    {
+        float waitTimer = 10;
+
+        waitTimer -= Time.deltaTime;
+        if(waitTimer <= 0)
+        {
+            return;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Land"))
+        {
+            playerState = StatePlayer.dead;
+        }
     }
 
 }
