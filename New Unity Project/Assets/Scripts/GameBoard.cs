@@ -8,6 +8,11 @@ public class GameBoard : MonoBehaviour
     public int cols;
     public Cell[] playSpaces;
     public Cell[,] board;
+    public Shadows mineShadow;
+    public Board currentBoard;
+
+    public int totalMines = 10;
+    int mineCount = 0;
 
     public PlayerControl player;
 
@@ -15,32 +20,68 @@ public class GameBoard : MonoBehaviour
 
     public void CreateBoard()
     {
+        if (currentBoard != null)
+            Destroy(currentBoard.gameObject);
+
         board = new Cell[rows, cols];
         GameObject newBoard = new GameObject("Game Board");
+        currentBoard = newBoard.AddComponent<Board>();
 
-        for(int r = 0; r < rows; r++)
+        for (int r = 0; r < rows; r++)
         {
             for (int c = 0; c < cols; c++)
             {
-                if (r == 0 && c == 0)
+                if ((r + c) % 3 == 0)
                 {
-                    if (player != null)
-                    {
-                        PlayerControl newPlayer = Instantiate(player, newBoard.transform);
-                        player.SetStartingPosition(r, c);
-                    }
-                    else
-                        Debug.LogError("Player PreFab reference is missing!!!");
+                    Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
+                    mineClone.isMineSpot = true;
+                    mineClone.SetNewLocation((r * 10), (c * 10));
                 }
                 Cell randomGridPiece = PickRandomCell();
                 Cell clone = Instantiate(randomGridPiece, newBoard.transform);
-                clone.SetNewLocation((r*10),(c*10));
+                clone.SetNewLocation((r * 10), (c * 10));
                 board[r, c] = clone;
 
             }
 
         }
 
+    }
+
+    public void ResetBoard()
+    {
+        mineCount = 0;
+
+        if (currentBoard != null)
+            Destroy(currentBoard.gameObject);
+
+        board = new Cell[rows, cols];
+        GameObject newBoard = new GameObject("Game Board");
+        currentBoard = newBoard.AddComponent<Board>();
+        
+
+        for (int r = 0; r < rows; r++)
+        {
+            for (int c = 0; c < cols; c++)
+            {
+                if ((r + c) % 3 == 0 && mineCount < totalMines && DiceRoll() == 2)
+                {
+                    Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
+                    mineClone.isMineSpot = true;
+                    mineClone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = mineClone;
+                    mineCount++;
+                }
+                else
+                {
+                    Cell randomGridPiece = PickRandomCell();
+                    Cell clone = Instantiate(randomGridPiece, newBoard.transform);
+                    clone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = clone;
+                }
+            }
+
+        }
     }
 
     void Start()
@@ -63,7 +104,13 @@ public class GameBoard : MonoBehaviour
     }
 
 
+    int DiceRoll()
+    {
+        int diceResult = Random.Range(1, 3);
 
+        return diceResult;
+
+    }
 
     Cell PickRandomCell()
     {
@@ -75,7 +122,7 @@ public class GameBoard : MonoBehaviour
         {
             rngFloor = playSpaces[1];
         }
-        else if(rng <= 6)
+        else if(rng <= 10)
         {
             rngFloor = playSpaces[2];//shadows
         }

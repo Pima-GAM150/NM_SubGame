@@ -56,13 +56,17 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void SetSail()
+    public void Detonate()
     {
-        Debug.Log("Set Sail pressed");
+        Debug.Log("Detonate pressed");
 
+        Shadows[] listOfSpots = FindObjectsOfType<Shadows>();
 
+        foreach (Shadows spot in listOfSpots)
+        {
+            spot.Detonate();
+        }
 
-        playerObject.SetSail();
 
     }
 

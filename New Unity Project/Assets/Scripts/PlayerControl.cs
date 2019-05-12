@@ -8,10 +8,10 @@ public class PlayerControl : MonoBehaviour
     public float hitPoints;
     public float moveSpeed;
 
+    public GameObject playerPiece;
+
     public Vector3 currentPos;
     public Vector3 forwardDestination;
-    public Transform rightDestination;
-    public Transform leftDestination;
     public float distance;
     public bool isMoving = false;
     bool buttonsActive;
@@ -23,7 +23,7 @@ public class PlayerControl : MonoBehaviour
     float startTime;
 
     //so player will click buttons to fill the cammand list, the int will dictate the movement type.
-    public List<int> commandQueue = new List<int>();
+    public List<Transform> commandQueue = new List<Transform>();
 
     public GameBoard gameBoard;
 
@@ -44,6 +44,7 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        ClickOnCell();
         HealthCheck();
         if (!isMoving)
         {
@@ -55,15 +56,39 @@ public class PlayerControl : MonoBehaviour
         }
 
 
-        if (forward)
-            MoveForward();
-        if (left)
-            MoveLeft();
-        if (right)
-            MoveRight();
-
-
     }
+
+    public void ClickOnCell()
+    {
+        if (Input.GetMouseButtonDown(0))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                Debug.Log("Hit " + hit.transform);
+                commandQueue.Add(hit.transform);
+            }
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+            if (Physics.Raycast(ray, out hit))
+            {
+                
+                Debug.Log("Hit " + hit.transform);
+                if (hit.transform.GetComponent<Shadows>() != null)
+                {
+                    hit.transform.GetComponent<Shadows>().MarkForMines();
+                }
+            }
+        }
+    }
+    
 
     private void HealthCheck()
     {
@@ -91,21 +116,7 @@ public class PlayerControl : MonoBehaviour
             //    Debug.Log(waitTimer);
             //}
             //currentPos = this.transform.position;
-            if (commandQueue[command] == 1)
-            {
-                forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
-                MoveForward();
-            }
-            if (commandQueue[command] == 2)
-            {
-                forwardDestination = new Vector3(transform.position.x - step, transform.position.y, transform.position.z);
-                left = true;
-            }
-            if (commandQueue[command] == 3)
-            {
-                forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
-                right = true;
-            }
+            playerPiece.transform.position = commandQueue[command].position;
             //waitTimer = 10;
         }
 
@@ -121,21 +132,20 @@ public class PlayerControl : MonoBehaviour
 
     //these are the button seletion methods
 
-    public void QueueForwardCommand()
+    public void MoveUp()
     {
-        if(buttonsActive)
-            commandQueue.Add(1);
+
     }
-    public void QueueLeftCommand()
+    public void MoveLeft()
     {
-        if (buttonsActive)
-            commandQueue.Add(2);
+     //   if (buttonsActive)
+          //  commandQueue.Add(2);
     }
 
-    public void QueueRightCommand()
+    public void MoveRight()
     {
-        if (buttonsActive)
-            commandQueue.Add(3);
+        //if (buttonsActive)
+            //commandQueue.Add(3);
     }
 
 
@@ -143,42 +153,6 @@ public class PlayerControl : MonoBehaviour
     {
         isMoving = !isMoving;
     }
-
-
-    //these are the command methods
-    public void MoveForward()
-    {
-        //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
-        
-
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-
-           
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
-    }
-    public void MoveLeft()
-    {
-        //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
-
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        { 
-
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
-    }
-
-    public void MoveRight()
-    {
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        { 
-
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
-    }
-
-
   
 
     public void Pause()
