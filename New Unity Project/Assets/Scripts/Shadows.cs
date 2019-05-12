@@ -16,8 +16,7 @@ public class Shadows : Cell
         cellType = 2;
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void Update()
     {
 
         if (!gameEnded)
@@ -51,7 +50,7 @@ public class Shadows : Cell
     public void MarkForMines()
     {
 
-        markedForMines = !markedForMines;
+        markedForMines = true;
 
     }
 
@@ -68,15 +67,17 @@ public class Shadows : Cell
         if(other.CompareTag("Player"))
         {
             PlayerControl target = other.GetComponent<PlayerControl>();
-
-            target.TakeDamage(2);
+            if (isMineSpot)
+            {
+                target.TakeDamage(10);
+            }
+            else
+            {
+                int dice = Random.Range(1, 6);
+                if (dice == 1)
+                    target.TakeDamage(1);
+            }
         }
-
-        if (other.CompareTag("Water"))
-        {
-            transform.position = other.transform.position;
-            other.transform.position = transform.position;
-
-        }
+        
     }
 }

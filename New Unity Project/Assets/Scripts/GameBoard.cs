@@ -64,7 +64,20 @@ public class GameBoard : MonoBehaviour
         {
             for (int c = 0; c < cols; c++)
             {
-                if ((r + c) % 3 == 0 && mineCount < totalMines && DiceRoll() == 2)
+                if (r == 0 && c == 0)
+                {
+                    if (player != null)
+                    {
+                        PlayerControl newPlayer = Instantiate(player, newBoard.transform);
+                        player.SetStartingPosition(r, c);
+                        Cell clone = Instantiate(playSpaces[0], newBoard.transform);
+                        clone.SetNewLocation((r * 10), (c * 10));
+                        board[r, c] = clone;
+                    }
+                    else
+                        Debug.LogError("Player PreFab reference is missing!!!");
+                }//        this is the clue and mine placement factor
+                else if (((r + c) % 3 == 0) && mineCount < totalMines && DiceRoll() == 2)
                 {
                     Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
                     mineClone.isMineSpot = true;

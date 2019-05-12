@@ -7,8 +7,9 @@ public class UIManager : MonoBehaviour
 {
 
     public Text commandQDisplay;
+    public Text playerHitPoints;
 
-    PlayerControl playerObject;
+    public PlayerControl playerObject;
 
 
     // Start is called before the first frame update
@@ -21,16 +22,19 @@ public class UIManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (playerObject == null)
+            playerObject = FindObjectOfType<PlayerControl>();
+
+        if (playerObject != null)
+            playerHitPoints.text = "HP : " + playerObject.hitPoints.ToString();
     }
 
     public void MoveUp()
     {
         Debug.Log("Move Up pressed");
 
-        commandQDisplay.text += "\n Forward";
 
-        playerObject.QueueForwardCommand();
+        playerObject.ToggleForward();
 
     }
 
@@ -39,9 +43,8 @@ public class UIManager : MonoBehaviour
         Debug.Log("Move Left pressed");
 
 
-        commandQDisplay.text += "\n Left";
 
-        playerObject.QueueLeftCommand();
+        playerObject.ToggleLeft();
 
     }
 
@@ -49,10 +52,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Move Right pressed");
 
-
-        commandQDisplay.text += "\n Right";
-
-        playerObject.QueueRightCommand();
+        playerObject.ToggleRight();
 
     }
 

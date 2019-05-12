@@ -44,51 +44,17 @@ public class PlayerControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ClickOnCell();
         HealthCheck();
-        if (!isMoving)
-        {
-            buttonsActive = true;
-        }
-        if (isMoving)
-        {
-            MoveShip();
-        }
+
+        if (forward)
+            MoveForward();
+        if (left)
+            MoveLeft();
+        if (right)
+            MoveRight();
 
 
     }
-
-    public void ClickOnCell()
-    {
-        if (Input.GetMouseButtonDown(0))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                Debug.Log("Hit " + hit.transform);
-                commandQueue.Add(hit.transform);
-            }
-        }
-
-        if (Input.GetMouseButtonDown(1))
-        {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
-            {
-                
-                Debug.Log("Hit " + hit.transform);
-                if (hit.transform.GetComponent<Shadows>() != null)
-                {
-                    hit.transform.GetComponent<Shadows>().MarkForMines();
-                }
-            }
-        }
-    }
-    
 
     private void HealthCheck()
     {
@@ -132,28 +98,61 @@ public class PlayerControl : MonoBehaviour
 
     //these are the button seletion methods
 
-    public void MoveUp()
+   public void ToggleForward()
     {
 
+        forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+        forward = true;
+    }
+    public void ToggleLeft()
+    {
+
+        forwardDestination = new Vector3(transform.position.x - step, transform.position.y, transform.position.z);
+        left = true;
+    }
+    public void ToggleRight()
+    {
+        forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
+        right = true;
+    }
+    //these are the command methods
+    public void MoveForward()
+    {
+        //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
+        
+
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
+        {
+            forward = false;
+
+
+        }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
     public void MoveLeft()
     {
-     //   if (buttonsActive)
-          //  commandQueue.Add(2);
+        //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
+
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
+        {
+            left = false;
+
+
+        }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
 
     public void MoveRight()
     {
-        //if (buttonsActive)
-            //commandQueue.Add(3);
-    }
+
+        if (Vector3.Distance(currentPos, forwardDestination) < .5)
+        {
+            right = false;
 
 
-    public void SetSail()
-    {
-        isMoving = !isMoving;
+        }
+        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
-  
 
     public void Pause()
     {

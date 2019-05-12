@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5439059516748207013}
   m_Layer: 0
   m_Name: Shadows
-  m_TagString: Untagged
+  m_TagString: Shadow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b48343eca88acb1468b243828370e8fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cellType: 0
+  markedForMines: 0
+  isMineSpot: 0

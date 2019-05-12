@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class Cell : MonoBehaviour
 {
-
+    public bool isMarkedSafe = false;
     public int cellType;
     //cell types are 
     //1 == water 2== shadow 3==  4 = 5= 6= 7= 8=  9= Land
@@ -27,8 +27,12 @@ public abstract class Cell : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
-        
+        if (isMarkedSafe)
+        {
+
+            GetComponent<Renderer>().material.color = Color.yellow;
+        }
     }
 }

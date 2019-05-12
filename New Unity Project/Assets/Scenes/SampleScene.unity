@@ -443,19 +443,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 534669902}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a8e6da151c9c69d4b8b6ce8b1d7cabea, type: 3}
+  m_Script: {fileID: 11500000, guid: e4f02c15bdcb5864c8b04b3e750f1ba9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hitPoints: 10
-  moveSpeed: 0
-  playerPiece: {fileID: 0}
-  currentPos: {x: 0, y: 0, z: 0}
-  forwardDestination: {x: 0, y: 0, z: 0}
-  distance: 0
-  isMoving: 0
-  commandQueue: []
-  gameBoard: {fileID: 0}
-  playerState: 0
 --- !u!1 &1017614358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1067,6 +1057,85 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1524270150}
   m_CullTransparentMesh: 0
+--- !u!1 &1592409393
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1592409396}
+  - component: {fileID: 1592409395}
+  - component: {fileID: 1592409394}
+  m_Layer: 5
+  m_Name: HPDisplay
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1592409394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592409393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 30
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 3
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'HP '
+--- !u!222 &1592409395
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592409393}
+  m_CullTransparentMesh: 0
+--- !u!224 &1592409396
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1592409393}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1892787857}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -459.5, y: 56.6}
+  m_SizeDelta: {x: 231, y: 61.1}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1820542369
 GameObject:
   m_ObjectHideFlags: 0
@@ -1308,6 +1377,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   commandQDisplay: {fileID: 323804705}
+  playerHitPoints: {fileID: 1592409394}
+  playerObject: {fileID: 0}
 --- !u!114 &1892787854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1385,6 +1456,7 @@ RectTransform:
   - {fileID: 1202195542}
   - {fileID: 323804707}
   - {fileID: 1017614359}
+  - {fileID: 1592409396}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1613,6 +1685,46 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameBoardMaker
       objectReference: {fileID: 0}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: playSpaces.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: playSpaces.Array.data[1]
+      value: 
+      objectReference: {fileID: 5627799860568038633, guid: 9403aef78336d924384e1833d16b2c68,
+        type: 3}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: playSpaces.Array.data[2]
+      value: 
+      objectReference: {fileID: 5439059516748207013, guid: 3527d25fa1a083a4ca5d3b0a93b43c62,
+        type: 3}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: playSpaces.Array.data[0]
+      value: 
+      objectReference: {fileID: 1541741307294553997, guid: 6ee07eb28106c68418cfe705907c0091,
+        type: 3}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: mineShadow
+      value: 
+      objectReference: {fileID: 5439059516748207013, guid: 3527d25fa1a083a4ca5d3b0a93b43c62,
+        type: 3}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 8678290863397262003, guid: f3829c4648099b74a899f8d942b45d50,
+        type: 3}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: totalMines
+      value: 15
+      objectReference: {fileID: 0}
     - target: {fileID: 2867837132399142556, guid: 419c75fa8c0084447ba3b174de969a13,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1668,34 +1780,5 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
-        type: 3}
-      propertyPath: playSpaces.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
-        type: 3}
-      propertyPath: playSpaces.Array.data[1]
-      value: 
-      objectReference: {fileID: 5627799860568038633, guid: 9403aef78336d924384e1833d16b2c68,
-        type: 3}
-    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
-        type: 3}
-      propertyPath: playSpaces.Array.data[2]
-      value: 
-      objectReference: {fileID: 5439059516748207013, guid: 3527d25fa1a083a4ca5d3b0a93b43c62,
-        type: 3}
-    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
-        type: 3}
-      propertyPath: playSpaces.Array.data[0]
-      value: 
-      objectReference: {fileID: 1541741307294553997, guid: 6ee07eb28106c68418cfe705907c0091,
-        type: 3}
-    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
-        type: 3}
-      propertyPath: mineShadow
-      value: 
-      objectReference: {fileID: 5439059516748207013, guid: 3527d25fa1a083a4ca5d3b0a93b43c62,
-        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 419c75fa8c0084447ba3b174de969a13, type: 3}
