@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class Cell : MonoBehaviour
 {
- 
+
+    public int cellType;
+    //cell types are 
+    //1 == water 2== shadow 3==  4 = 5= 6= 7= 8=  9= Land
 
     public Cell ()
     {

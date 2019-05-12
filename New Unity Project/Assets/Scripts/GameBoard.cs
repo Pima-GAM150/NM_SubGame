@@ -51,8 +51,19 @@ public class GameBoard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
+
+    void MoveCell(int x, int y)
+    {
+        Cell currentspot = board[x, y];
+        Cell spotBelow = board[x+1, y+1];
+        board[x, y] = spotBelow;
+        spotBelow = currentspot;
+    }
+
+
+
 
     Cell PickRandomCell()
     {

@@ -94,7 +94,7 @@ public class PlayerControl : MonoBehaviour
             if (commandQueue[command] == 1)
             {
                 forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
-                forward = true;
+                MoveForward();
             }
             if (commandQueue[command] == 2)
             {
@@ -153,7 +153,6 @@ public class PlayerControl : MonoBehaviour
 
         if (Vector3.Distance(currentPos, forwardDestination) < .5)
         {
-            forward = false;
 
            
         }
@@ -164,9 +163,7 @@ public class PlayerControl : MonoBehaviour
         //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
 
         if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-            left = false;
-
+        { 
 
         }
         else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
@@ -175,9 +172,7 @@ public class PlayerControl : MonoBehaviour
     public void MoveRight()
     {
         if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-            right = false;
-
+        { 
 
         }
         else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
