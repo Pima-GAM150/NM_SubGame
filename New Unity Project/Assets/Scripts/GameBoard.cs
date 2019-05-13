@@ -44,7 +44,7 @@ public class GameBoard : MonoBehaviour
                     else
                         Debug.LogError("Player PreFab reference is missing!!!");
                 }//        this is the clue and mine placement factor
-                else if (((r + c) % 3 == 0) && mineCount < totalMines && DiceRoll() == 2)
+                else if ((RandomMathEquation(r,c) && mineCount < totalMines && DiceRoll() == 2))
                 {
                     Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
                     mineClone.isMineSpot = true;
@@ -70,6 +70,29 @@ public class GameBoard : MonoBehaviour
         }
 
     }
+
+    public bool RandomMathEquation(int r, int c)
+    {
+        int dice = Random.Range(1,6);
+
+        if (dice <= 3)
+        {
+            if ((r + c) % 4 == 0){
+                return true;
+            }
+            else return false;
+        }
+        else
+        {
+            if ((r + c) % 3 == 0)
+            {
+                return true;
+            }
+            else return false;
+        }
+
+    }
+
 
     public void ResetBoard()
     {
@@ -100,19 +123,19 @@ public class GameBoard : MonoBehaviour
                     else
                         Debug.LogError("Player PreFab reference is missing!!!");
                 }//        this is the clue and mine placement factor
-                else if (((r + c) % 3 == 0) && mineCount < totalMines && DiceRoll() == 2)
+                else if ((r == rows - 1) && (c == cols - 1))
+                {
+                    Cell clone = Instantiate(playSpaces[3], newBoard.transform);
+                    clone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = clone;
+                }
+                else if ((RandomMathEquation(r,c) && mineCount < totalMines && DiceRoll() != 2))
                 {
                     Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
                     mineClone.isMineSpot = true;
                     mineClone.SetNewLocation((r * 10), (c * 10));
                     board[r, c] = mineClone;
                     mineCount++;
-                }
-                else if ((r == rows-3) && (c == cols-1) )
-                {
-                    Cell clone = Instantiate(playSpaces[3], newBoard.transform);
-                    clone.SetNewLocation((r * 10), (c * 10));
-                    board[r, c] = clone;
                 }
                 else
                 {
@@ -157,14 +180,14 @@ public class GameBoard : MonoBehaviour
     Cell PickRandomCell()
     {
         Cell rngFloor;
-        int rng = Random.Range(1,20);
+        int rng = Random.Range(1,100);
 
 
-        if(rng <= 2)
+        if(rng <= 15)
         {
             rngFloor = playSpaces[1];
         }
-        else if(rng <= 10)
+        else if(rng <= 75)
         {
             rngFloor = playSpaces[2];//shadows
         }

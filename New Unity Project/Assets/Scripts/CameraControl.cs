@@ -8,7 +8,7 @@ public class CameraControl : MonoBehaviour
     public const int  MINE_FLAG_MAX = 20;
     public int mineFlagCount;
 
-    const int SAFE_FLAG_MAX = 30;
+    const int SAFE_FLAG_MAX = 20;
     int safeFlagCount;
 
 

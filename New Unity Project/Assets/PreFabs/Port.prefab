@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3456517173922806214}
   - component: {fileID: 8168590631263857721}
   - component: {fileID: 263264597788573434}
-  - component: {fileID: 6167728784347919112}
+  - component: {fileID: 5018636392552144134}
   m_Layer: 0
   m_Name: Port
   m_TagString: Land
@@ -93,7 +93,7 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 14
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &6167728784347919112
+--- !u!114 &5018636392552144134
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -102,8 +102,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 8421366492672881691}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 817b932c3a4d969409a6e795f1f25d20, type: 3}
+  m_Script: {fileID: 11500000, guid: fd9d9d0879f2315499aca777d641e061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMarkedSafe: 0
-  cellType: 0
