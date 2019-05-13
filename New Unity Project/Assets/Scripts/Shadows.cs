@@ -18,6 +18,7 @@ public class Shadows : Cell
 
     public override void Update()
     {
+        base.Update();
 
         if (!gameEnded)
         {
@@ -71,10 +72,10 @@ public class Shadows : Cell
             {
                 target.TakeDamage(10);
             }
-            else
+            else if(!isMarkedSafe)
             {
                 int dice = Random.Range(1, 6);
-                if (dice == 1)
+                if (dice == 2)
                     target.TakeDamage(1);
             }
         }

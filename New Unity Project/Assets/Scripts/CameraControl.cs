@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class CameraControl : MonoBehaviour
 {
+
+    public const int  MINE_FLAG_MAX = 20;
+    public int mineFlagCount;
+
+    const int SAFE_FLAG_MAX = 30;
+    int safeFlagCount;
+
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,33 +30,42 @@ public class CameraControl : MonoBehaviour
 
     public void ClickOnCell()
     {
-        if (Input.GetMouseButtonDown(0))
+        if (safeFlagCount < SAFE_FLAG_MAX)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(0))
             {
-                Debug.Log("Hit " + hit.transform);
-                if (hit.transform.GetComponent<Cell>() != null)
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+
+                if (Physics.Raycast(ray, out hit))
                 {
-                    hit.transform.GetComponent<Cell>().isMarkedSafe = true;
+                    Debug.Log("Hit " + hit.transform);
+                    if (hit.transform.GetComponent<Cell>() != null)
+                    {
+                        hit.transform.GetComponent<Cell>().isMarkedSafe = true;
+                        safeFlagCount++;
+                    }
                 }
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
+        if (mineFlagCount < SAFE_FLAG_MAX)
         {
-            RaycastHit hit;
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit))
+            if (Input.GetMouseButtonDown(1))
             {
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                Debug.Log("Hit " + hit.transform);
-                if (hit.transform.GetComponent<Shadows>() != null)
+                if (Physics.Raycast(ray, out hit))
                 {
-                    hit.transform.GetComponent<Shadows>().MarkForMines();
+
+                    Debug.Log("Hit " + hit.transform);
+                    if (hit.transform.GetComponent<Shadows>() != null)
+                    {
+                        hit.transform.GetComponent<Shadows>().MarkForMines();
+                        mineFlagCount++;
+                    }
                 }
             }
         }

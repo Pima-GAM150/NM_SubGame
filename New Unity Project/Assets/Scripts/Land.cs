@@ -13,7 +13,7 @@ public class Land : Cell
     // Update is called once per frame
     public override void Update()
     {
-        
+        base.Update();
     }
     private void OnTriggerEnter(Collider other)
     {

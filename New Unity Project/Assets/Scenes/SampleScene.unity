@@ -1688,7 +1688,7 @@ PrefabInstance:
     - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
         type: 3}
       propertyPath: playSpaces.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
         type: 3}
@@ -1725,6 +1725,12 @@ PrefabInstance:
       propertyPath: totalMines
       value: 15
       objectReference: {fileID: 0}
+    - target: {fileID: 2867837132399142544, guid: 419c75fa8c0084447ba3b174de969a13,
+        type: 3}
+      propertyPath: playSpaces.Array.data[3]
+      value: 
+      objectReference: {fileID: 6167728784347919112, guid: 7bf9db0c2ef983b49bfac4c759f068e0,
+        type: 3}
     - target: {fileID: 2867837132399142556, guid: 419c75fa8c0084447ba3b174de969a13,
         type: 3}
       propertyPath: m_LocalPosition.x

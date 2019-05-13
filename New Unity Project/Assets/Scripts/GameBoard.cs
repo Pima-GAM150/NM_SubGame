@@ -31,17 +31,40 @@ public class GameBoard : MonoBehaviour
         {
             for (int c = 0; c < cols; c++)
             {
-                if ((r + c) % 3 == 0)
+                if (r == 0 && c == 0)
+                {
+                    if (player != null)
+                    {
+                        PlayerControl newPlayer = Instantiate(player, newBoard.transform);
+                        player.SetStartingPosition(r, c);
+                        Cell clone = Instantiate(playSpaces[0], newBoard.transform);
+                        clone.SetNewLocation((r * 10), (c * 10));
+                        board[r, c] = clone;
+                    }
+                    else
+                        Debug.LogError("Player PreFab reference is missing!!!");
+                }//        this is the clue and mine placement factor
+                else if (((r + c) % 3 == 0) && mineCount < totalMines && DiceRoll() == 2)
                 {
                     Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
                     mineClone.isMineSpot = true;
                     mineClone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = mineClone;
+                    mineCount++;
                 }
-                Cell randomGridPiece = PickRandomCell();
-                Cell clone = Instantiate(randomGridPiece, newBoard.transform);
-                clone.SetNewLocation((r * 10), (c * 10));
-                board[r, c] = clone;
-
+                else if ((r == rows - 1) && (c == cols - 1))
+                {
+                    Cell clone = Instantiate(playSpaces[3], newBoard.transform);
+                    clone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = clone;
+                }
+                else
+                {
+                    Cell randomGridPiece = PickRandomCell();
+                    Cell clone = Instantiate(randomGridPiece, newBoard.transform);
+                    clone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = clone;
+                }
             }
 
         }
@@ -84,6 +107,12 @@ public class GameBoard : MonoBehaviour
                     mineClone.SetNewLocation((r * 10), (c * 10));
                     board[r, c] = mineClone;
                     mineCount++;
+                }
+                else if ((r == rows-3) && (c == cols-1) )
+                {
+                    Cell clone = Instantiate(playSpaces[3], newBoard.transform);
+                    clone.SetNewLocation((r * 10), (c * 10));
+                    board[r, c] = clone;
                 }
                 else
                 {

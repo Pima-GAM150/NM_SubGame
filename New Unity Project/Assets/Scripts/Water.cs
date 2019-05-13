@@ -19,6 +19,7 @@ public class Water : Cell
 
     public override void Update()
     {
-        
+
+        base.Update();
     }
 }
