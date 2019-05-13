@@ -30,7 +30,6 @@ public class Shadows : Cell
         {
             if (isMineSpot && !markedForMines)
             {
-                GetComponent<Renderer>().material.color = Color.black;
                 fail = true;
             }
             else if (!isMineSpot && markedForMines)
@@ -55,6 +54,8 @@ public class Shadows : Cell
 
     }
 
+    
+
     public void Detonate()
     {
 
@@ -68,15 +69,20 @@ public class Shadows : Cell
         if(other.CompareTag("Player"))
         {
             PlayerControl target = other.GetComponent<PlayerControl>();
-            if (isMineSpot)
+            if (isMineSpot && !isMarkedSafe)
             {
                 target.TakeDamage(10);
+
+                GetComponent<Renderer>().material.color = Color.black;
             }
             else if(!isMarkedSafe)
             {
                 int dice = Random.Range(1, 6);
                 if (dice == 2)
                     target.TakeDamage(1);
+            }
+            else if (isMarkedSafe)
+            {
             }
         }
         

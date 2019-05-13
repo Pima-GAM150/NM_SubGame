@@ -27,7 +27,7 @@ public class PlayerControl : MonoBehaviour
 
     public GameBoard gameBoard;
 
-    private int step = 10;
+    private int step = 100;
 
 
     public enum StatePlayer { dead = 0, alive = 1}

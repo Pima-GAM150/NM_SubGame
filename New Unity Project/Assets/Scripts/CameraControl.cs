@@ -42,7 +42,7 @@ public class CameraControl : MonoBehaviour
                     Debug.Log("Hit " + hit.transform);
                     if (hit.transform.GetComponent<Cell>() != null)
                     {
-                        hit.transform.GetComponent<Cell>().isMarkedSafe = true;
+                        hit.transform.GetComponent<Cell>().MarkSafe();
                         safeFlagCount++;
                     }
                 }

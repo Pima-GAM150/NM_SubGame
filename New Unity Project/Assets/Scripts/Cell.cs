@@ -35,4 +35,9 @@ public abstract class Cell : MonoBehaviour
             GetComponent<Renderer>().material.color = Color.yellow;
         }
     }
+
+    public void MarkSafe()
+    {
+        isMarkedSafe = true;
+    }
 }
