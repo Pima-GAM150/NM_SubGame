@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerControl : MonoBehaviour
+public abstract class PlayerControl : MonoBehaviour
 {
 
     public float hitPoints;
     public float moveSpeed;
 
-    public GameObject playerPiece;
 
-    public Vector3 currentPos;
-    public Vector3 forwardDestination;
-    public float distance;
-    public bool isMoving = false;
+    Vector3 currentPos;
+    Vector3 forwardDestination;
+    private float distance;
+    bool isMoving = false;
     bool buttonsActive;
 
     bool forward = false;
@@ -34,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     public StatePlayer playerState;
     
 
-    void Start()
+    public virtual void Start()
     {
         gameBoard = FindObjectOfType<GameBoard>();
         currentPos = this.transform.position;
@@ -42,7 +41,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    public virtual void Update()
     {
         HealthCheck();
 
@@ -70,27 +69,8 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    private void MoveShip()
-    {
-        for (int command = 0; command< commandQueue.Count; command++)
-        {
-            Debug.Log("CurrentCommand" + command);
-            //float waitTimer = 10;
-            //while (waitTimer > 0)
-            //{
-            //    waitTimer -= Time.deltaTime;
-            //    Debug.Log(waitTimer);
-            //}
-            //currentPos = this.transform.position;
-            playerPiece.transform.position = commandQueue[command].position;
-            //waitTimer = 10;
-        }
 
-        isMoving = false;
-        commandQueue.Clear();
-    }
-
-    public void SetStartingPosition(int startingRow, int startingCol)
+    public virtual void SetStartingPosition(int startingRow, int startingCol)
     {
         this.transform.position = new Vector3(transform.position.x + startingRow, transform.position.y, transform.position.z + startingCol);
         
@@ -98,25 +78,25 @@ public class PlayerControl : MonoBehaviour
 
     //these are the button seletion methods
 
-   public void ToggleForward()
+    public virtual void ToggleForward()
     {
 
         forwardDestination = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
         forward = true;
     }
-    public void ToggleLeft()
+    public virtual void ToggleLeft()
     {
 
         forwardDestination = new Vector3(transform.position.x - step, transform.position.y, transform.position.z);
         left = true;
     }
-    public void ToggleRight()
+    public virtual void ToggleRight()
     {
         forwardDestination = new Vector3(transform.position.x + step, transform.position.y, transform.position.z);
         right = true;
     }
     //these are the command methods
-    public void MoveForward()
+    public virtual void MoveForward()
     {
         //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
         
@@ -129,7 +109,7 @@ public class PlayerControl : MonoBehaviour
         }
         else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
-    public void MoveLeft()
+    public virtual void MoveLeft()
     {
         //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
 
@@ -142,7 +122,7 @@ public class PlayerControl : MonoBehaviour
         else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
 
-    public void MoveRight()
+    public virtual void MoveRight()
     {
 
         if (Vector3.Distance(currentPos, forwardDestination) < .5)
@@ -154,7 +134,7 @@ public class PlayerControl : MonoBehaviour
         else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
 
-    public void Pause()
+    public virtual void Pause()
     {
         float waitTimer = 10;
 
@@ -165,7 +145,7 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
-    public void TakeDamage(int damageIn)
+    public virtual void TakeDamage(int damageIn)
     {
         hitPoints -= damageIn;
 

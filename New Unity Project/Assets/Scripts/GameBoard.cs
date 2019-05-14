@@ -14,7 +14,8 @@ public class GameBoard : MonoBehaviour
     public int totalMines = 10;
     int mineCount = 0;
 
-    public PlayerControl player;
+    public MineSweeper player;
+    public BattleShip escort;
 
     
 
@@ -36,7 +37,7 @@ public class GameBoard : MonoBehaviour
                     if (player != null)
                     {
                         PlayerControl newPlayer = Instantiate(player, newBoard.transform);
-                        player.SetStartingPosition(r, c);
+                        newPlayer.SetStartingPosition(r, c);
                         Cell clone = Instantiate(playSpaces[0], newBoard.transform);
                         clone.SetNewLocation((r * 10), (c * 10));
                         board[r, c] = clone;
@@ -44,6 +45,19 @@ public class GameBoard : MonoBehaviour
                     else
                         Debug.LogError("Player PreFab reference is missing!!!");
                 }//        this is the clue and mine placement factor
+                else if (c == 0 && r == 7)
+                {
+                    if (escort != null)
+                    {
+                        PlayerControl battleship = Instantiate(escort, newBoard.transform);
+                        battleship.SetStartingPosition(r*10, c*10);
+                        Cell clone = Instantiate(playSpaces[0], newBoard.transform);
+                        clone.SetNewLocation((r * 10), (c * 10));
+                        board[r, c] = clone;
+                    }
+                    else
+                        Debug.LogError("Player PreFab reference is missing!!!");
+                }
                 else if ((RandomMathEquation(r,c) && mineCount < totalMines && DiceRoll() == 2))
                 {
                     Shadows mineClone = Instantiate(mineShadow, newBoard.transform);
@@ -104,7 +118,7 @@ public class GameBoard : MonoBehaviour
         board = new Cell[rows, cols];
         GameObject newBoard = new GameObject("Game Board");
         currentBoard = newBoard.AddComponent<Board>();
-        
+        int rng = Random.Range(1,9);
 
         for (int r = 0; r < rows; r++)
         {
@@ -122,7 +136,20 @@ public class GameBoard : MonoBehaviour
                     }
                     else
                         Debug.LogError("Player PreFab reference is missing!!!");
-                }//        this is the clue and mine placement factor
+                }
+                else if (c == 0 && r == rng)
+                {
+                    if (escort != null)
+                    {
+                        PlayerControl battleship = Instantiate(escort, newBoard.transform);
+                        battleship.SetStartingPosition(r * 10, c * 10);
+                        Cell clone = Instantiate(playSpaces[0], newBoard.transform);
+                        clone.SetNewLocation((r * 10), (c * 10));
+                        board[r, c] = clone;
+                    }
+                    else
+                        Debug.LogError("BattleShip PreFab reference is missing!!!");
+                }
                 else if ((r == rows - 1) && (c == cols - 1))
                 {
                     Cell clone = Instantiate(playSpaces[3], newBoard.transform);

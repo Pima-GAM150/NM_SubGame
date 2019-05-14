@@ -7,15 +7,20 @@ public class UIManager : MonoBehaviour
 {
 
     public Text commandQDisplay;
-    public Text playerHitPoints;
+    public Text battleShipHPLabel;
+    public Text mineSweeperHPLabel;
 
-    public PlayerControl playerObject;
+    public MineSweeper playerObject;
+    public BattleShip objectiveObject;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        playerObject = FindObjectOfType<PlayerControl>();
+        playerObject = FindObjectOfType<MineSweeper>();
+        objectiveObject = FindObjectOfType<BattleShip>();
+
+
         
     }
 
@@ -23,13 +28,20 @@ public class UIManager : MonoBehaviour
     void Update()
     {
         if (playerObject == null)
-            playerObject = FindObjectOfType<PlayerControl>();
+            playerObject = FindObjectOfType<MineSweeper>();
 
         if (playerObject != null)
-            playerHitPoints.text = "HP : " + playerObject.hitPoints.ToString();
+            mineSweeperHPLabel.text = playerObject.hitPoints.ToString();
+
+
+        if (objectiveObject == null)
+            objectiveObject = FindObjectOfType<BattleShip>();
+
+        if (objectiveObject != null)
+            battleShipHPLabel.text = objectiveObject.hitPoints.ToString();
     }
 
-    public void MoveUp()
+    public void MoveMSUp()
     {
         Debug.Log("Move Up pressed");
 
@@ -38,7 +50,7 @@ public class UIManager : MonoBehaviour
 
     }
 
-    public void MoveLeft()
+    public void MoveMSLeft()
     {
         Debug.Log("Move Left pressed");
 
@@ -48,11 +60,38 @@ public class UIManager : MonoBehaviour
 
     }
 
-     public void MoveRight()
+     public void MoveMSRight()
     {
         Debug.Log("Move Right pressed");
 
         playerObject.ToggleRight();
+
+    }
+
+    public void MoveBSUp()
+    {
+        Debug.Log("Move Up pressed");
+
+
+        objectiveObject.ToggleForward();
+
+    }
+
+    public void MoveBSLeft()
+    {
+        Debug.Log("Move Left pressed");
+
+
+
+        objectiveObject.ToggleLeft();
+
+    }
+
+    public void MoveBSRight()
+    {
+        Debug.Log("Move Right pressed");
+
+        objectiveObject.ToggleRight();
 
     }
 

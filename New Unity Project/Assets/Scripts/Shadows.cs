@@ -78,7 +78,7 @@ public class Shadows : Cell
             else if(!isMarkedSafe)
             {
                 int dice = Random.Range(1, 6);
-                if (dice == 2)
+                if (dice < 5)
                     target.TakeDamage(1);
             }
             else if (isMarkedSafe)
