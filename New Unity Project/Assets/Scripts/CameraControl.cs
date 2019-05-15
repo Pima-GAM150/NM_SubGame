@@ -11,7 +11,8 @@ public class CameraControl : MonoBehaviour
     const int SAFE_FLAG_MAX = 20;
     int safeFlagCount;
 
-
+    MineSweeper minesweep;
+    bool isMineSweeperActive = true;
 
     // Start is called before the first frame update
     void Start()
@@ -22,6 +23,15 @@ public class CameraControl : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (minesweep == null)
+        {
+            isMineSweeperActive = false;
+            minesweep = FindObjectOfType<MineSweeper>();
+        }
+        if (minesweep != null)
+        {
+            isMineSweeperActive = true;
+        }
 
         ClickOnCell();
     }
@@ -49,7 +59,7 @@ public class CameraControl : MonoBehaviour
             }
         }
 
-        if (mineFlagCount < SAFE_FLAG_MAX)
+        if (mineFlagCount < SAFE_FLAG_MAX && isMineSweeperActive)
         {
 
             if (Input.GetMouseButtonDown(1))

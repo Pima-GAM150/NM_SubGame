@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 5018636392552144134}
   m_Layer: 0
   m_Name: Port
-  m_TagString: Land
+  m_TagString: Port
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -105,3 +105,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9d9d0879f2315499aca777d641e061, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMarkedSafe: 0
+  cellType: 0
+  shipsSaved: 0

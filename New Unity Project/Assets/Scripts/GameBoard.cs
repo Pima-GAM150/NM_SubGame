@@ -118,7 +118,7 @@ public class GameBoard : MonoBehaviour
         board = new Cell[rows, cols];
         GameObject newBoard = new GameObject("Game Board");
         currentBoard = newBoard.AddComponent<Board>();
-        int rng = Random.Range(1,9);
+        int rng = Random.Range(1,6);
 
         for (int r = 0; r < rows; r++)
         {

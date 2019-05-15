@@ -9,10 +9,20 @@ public class UIManager : MonoBehaviour
     public Text commandQDisplay;
     public Text battleShipHPLabel;
     public Text mineSweeperHPLabel;
+    public Text shipsSavedDisplay;
+
+    bool buttonsActive = true;
+    int ships;
 
     public MineSweeper playerObject;
     public BattleShip objectiveObject;
+    public Port goal;
 
+
+    void OnPlayerSavesShip(Port portCalling)
+    {
+        ships++;
+    }
 
     // Start is called before the first frame update
     void Start()
@@ -20,13 +30,18 @@ public class UIManager : MonoBehaviour
         playerObject = FindObjectOfType<MineSweeper>();
         objectiveObject = FindObjectOfType<BattleShip>();
 
-
+        Port.PlayerSavedAShipEvent += OnPlayerSavesShip;
         
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (goal == null)
+            goal = FindObjectOfType<Port>();
+        
+            shipsSavedDisplay.text = " " + ships; 
+
         if (playerObject == null)
             playerObject = FindObjectOfType<MineSweeper>();
 
@@ -40,6 +55,12 @@ public class UIManager : MonoBehaviour
         if (objectiveObject != null)
             battleShipHPLabel.text = objectiveObject.hitPoints.ToString();
     }
+
+    public void EnableAndDisableButtons()
+    {
+        buttonsActive = !buttonsActive;
+    }
+
 
     public void MoveMSUp()
     {

@@ -21,7 +21,7 @@ public class Land : Cell
         {
             PlayerControl target = other.GetComponent<PlayerControl>();
 
-            target.TakeDamage(10);
+            target.TakeDamage(20);
         }
     }
 }

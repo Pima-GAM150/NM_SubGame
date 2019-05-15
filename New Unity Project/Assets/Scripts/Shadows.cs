@@ -69,21 +69,23 @@ public class Shadows : Cell
         if(other.CompareTag("Player"))
         {
             PlayerControl target = other.GetComponent<PlayerControl>();
-            if (isMineSpot && !isMarkedSafe)
+            if (isMineSpot && !markedForMines)
             {
                 target.TakeDamage(10);
 
                 GetComponent<Renderer>().material.color = Color.black;
             }
-            else if(!isMarkedSafe)
+            else if(!isMineSpot)
             {
-                int dice = Random.Range(1, 6);
-                if (dice < 5)
-                    target.TakeDamage(1);
+                if (!isMarkedSafe)
+                {
+                    int dice = Random.Range(1, 6);
+                    if (dice < 5)
+                        target.TakeDamage(1);
+                }
             }
-            else if (isMarkedSafe)
-            {
-            }
+            
+
         }
         
     }
