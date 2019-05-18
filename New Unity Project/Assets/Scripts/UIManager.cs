@@ -67,7 +67,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Move Up pressed");
 
 
-        playerObject.ToggleForward();
+        playerObject.QueueCommand(1);
 
     }
 
@@ -77,7 +77,7 @@ public class UIManager : MonoBehaviour
 
 
 
-        playerObject.ToggleLeft();
+        playerObject.QueueCommand(2);
 
     }
 
@@ -85,7 +85,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Move Right pressed");
 
-        playerObject.ToggleRight();
+        playerObject.QueueCommand(3);
 
     }
 
@@ -94,7 +94,7 @@ public class UIManager : MonoBehaviour
         Debug.Log("Move Up pressed");
 
 
-        objectiveObject.ToggleForward();
+        objectiveObject.QueueCommand(1);
 
     }
 
@@ -104,7 +104,7 @@ public class UIManager : MonoBehaviour
 
 
 
-        objectiveObject.ToggleLeft();
+        objectiveObject.QueueCommand(2);
 
     }
 
@@ -112,7 +112,7 @@ public class UIManager : MonoBehaviour
     {
         Debug.Log("Move Right pressed");
 
-        objectiveObject.ToggleRight();
+        objectiveObject.QueueCommand(3);
 
     }
 
@@ -128,6 +128,15 @@ public class UIManager : MonoBehaviour
         }
 
 
+    }
+
+    public void SetSail()
+    {
+        if (playerObject != null)
+            playerObject.ExecuteCommands();
+
+        if (objectiveObject != null)
+            objectiveObject.ExecuteCommands();
     }
 
 

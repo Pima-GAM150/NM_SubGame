@@ -22,11 +22,11 @@ public abstract class PlayerControl : MonoBehaviour
     float startTime;
 
     //so player will click buttons to fill the cammand list, the int will dictate the movement type.
-    public List<Transform> commandQueue = new List<Transform>();
+    public List<int> commandQueue = new List<int>();
 
     public GameBoard gameBoard;
 
-    private int step = 100;
+    private int step = 10;
 
 
     public enum StatePlayer { dead = 0, alive = 1}
@@ -76,6 +76,50 @@ public abstract class PlayerControl : MonoBehaviour
         
     }
 
+
+    public virtual void QueueCommand(int direction)
+    {
+        commandQueue.Add(direction);
+    }
+
+    public virtual void QueueLeftCommand()
+    {
+        commandQueue.Add(2);
+    }
+
+    public virtual void QueueRightCommand()
+    {
+        commandQueue.Add(3);
+    }
+
+    public virtual void ExecuteCommands()
+    {
+        int count = 1;
+        foreach (int command in commandQueue)
+        {
+            Debug.Log(command);
+            if (command == 1)
+            {
+                Invoke("MoveForward", 1f + count);
+                
+            }
+            if (command == 2)
+            {
+                Invoke("MoveLeft", 1f + count);
+            }
+            if (command == 3)
+            {
+                Invoke("MoveRight", 1f + count);
+            }
+            count++;
+        }
+
+        commandQueue.Clear();
+
+    }
+
+
+
     //these are the button seletion methods
 
     public virtual void ToggleForward()
@@ -99,39 +143,20 @@ public abstract class PlayerControl : MonoBehaviour
     public virtual void MoveForward()
     {
         //this.transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step);
-        
+        transform.position = new Vector3(transform.position.x, transform.position.y, transform.position.z + step); ;        
 
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-            forward = false;
-
-
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
     }
     public virtual void MoveLeft()
     {
         //this.transform.position = new Vector3(transform.position.x-step, transform.position.y, transform.position.z);
 
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-            left = false;
-
-
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x - step, transform.position.y, transform.position.z); 
     }
 
     public virtual void MoveRight()
     {
 
-        if (Vector3.Distance(currentPos, forwardDestination) < .5)
-        {
-            right = false;
-
-
-        }
-        else transform.position = Vector3.MoveTowards(transform.position, forwardDestination, moveSpeed * Time.deltaTime);
+        transform.position = new Vector3(transform.position.x + step, transform.position.y, transform.position.z); ;
     }
 
     public virtual void Pause()
